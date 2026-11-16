@@ -1,0 +1,455 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Corpo Livre</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500;600&display=swap">
+<style>
+/* Layout: página de vendas em formato de pôster esportivo. A ficha de treino interativa fica na primeira tela e mostra o produto funcionando. */
+:root {
+  --bg: #EFF2EE;
+  --surface: #FFFFFF;
+  --ink: #0F1715;
+  --muted: #52605A;
+  --line: #CFD6CE;
+  --soft: #E3E8E2;
+  --accent: #2347F5;
+  --accent-ink: #FFFFFF;
+  --band: #0F1715;
+  --band-ink: #EFF2EE;
+  --display: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+  --body: 'Barlow', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B100F; --surface: #141B19; --ink: #EDF1EC; --muted: #9AA7A0; --line: #27312E; --soft: #1B2421;
+    --accent: #869CFF; --accent-ink: #0B100F; --band: #EDF1EC; --band-ink: #0B100F;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B100F; --surface: #141B19; --ink: #EDF1EC; --muted: #9AA7A0; --line: #27312E; --soft: #1B2421;
+  --accent: #869CFF; --accent-ink: #0B100F; --band: #EDF1EC; --band-ink: #0B100F;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; }
+h1, h2, h3 { font-family: var(--display); text-transform: uppercase; font-weight: 800; line-height: .95; letter-spacing: .005em; text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(2.3rem, 6vw, 3.7rem); }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.sr { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+.eyebrow { font-size: .8rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 26px; border: 2px solid var(--accent); background: var(--accent); color: var(--accent-ink); font: 600 .95rem var(--body); letter-spacing: .08em; text-transform: uppercase; text-decoration: none; border-radius: 4px; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--ink); }
+.btn:hover { filter: brightness(1.08); }
+
+/* faixa Black Friday */
+.band { background: var(--band); color: var(--band-ink); }
+.band-in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 24px; padding-block: 10px; font-size: .92rem; }
+.band strong { letter-spacing: .08em; text-transform: uppercase; }
+.count { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+.top { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 14px; }
+.brand { font-family: var(--display); font-weight: 800; font-size: 1.6rem; letter-spacing: .04em; text-transform: uppercase; text-decoration: none; }
+.top a.small { font-size: .85rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+
+/* hero */
+.hero { display: grid; gap: 36px; padding-block: clamp(24px, 5vw, 64px) clamp(48px, 8vw, 96px); align-items: start; }
+@media (min-width: 880px) { .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; } }
+.hero h1 { font-size: clamp(3.4rem, 12vw, 6.6rem); margin-block: 14px 20px; }
+.hero .lead { max-width: 34em; font-size: 1.1rem; color: var(--muted); }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.facts { list-style: none; padding: 0; margin: 36px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); border-top: 2px solid var(--ink); }
+.facts li { padding: 12px 12px 12px 0; font-size: .92rem; color: var(--muted); }
+.facts b { display: block; font-family: var(--display); font-size: 1.9rem; line-height: 1; color: var(--ink); text-transform: uppercase; }
+
+/* ficha de treino */
+.ficha { background: var(--surface); border: 2px solid var(--ink); border-radius: 6px; overflow: hidden; min-width: 0; }
+.ficha-head { background: var(--ink); color: var(--bg); padding: 12px 16px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.ficha-head h2 { font-size: 1.6rem; color: inherit; }
+.ficha-head span { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; opacity: .75; }
+.controls { padding: 16px; display: grid; gap: 14px; border-bottom: 1px solid var(--line); }
+fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+legend { padding: 0; margin-bottom: 6px; font-size: .75rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.seg { display: flex; flex-wrap: wrap; gap: 6px; }
+.seg label { position: relative; }
+.seg span { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--surface); font-weight: 600; font-size: .92rem; cursor: pointer; }
+.seg input:checked + span { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.seg input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+.meta { padding: 14px 16px 6px; font-weight: 600; }
+.row { display: grid; grid-template-columns: 1.8rem minmax(0, 1fr) 4.4rem 2.8rem; gap: 8px 10px; align-items: baseline; padding: 11px 16px; border-bottom: 1px solid var(--line); }
+.row.h { padding-block: 6px; font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+#lista { list-style: none; margin: 0; padding: 0; }
+#lista .row:last-child { border-bottom: 0; }
+.idx { font-family: var(--display); font-weight: 800; font-size: 1.4rem; color: var(--accent); }
+.mv small { display: block; color: var(--muted); font-size: .82rem; }
+.vol { font-family: var(--display); font-weight: 800; font-size: 1.35rem; text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.rest { color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+.ficha-foot { padding: 12px 16px; font-size: .86rem; color: var(--muted); border-top: 1px solid var(--line); background: var(--soft); }
+
+section { padding-block: clamp(48px, 8vw, 96px); }
+.alt { background: var(--soft); }
+.sec-head { display: grid; gap: 12px; margin-bottom: 36px; max-width: 40em; }
+.sec-head p { color: var(--muted); }
+
+/* alavancas de progressão */
+.levers { display: grid; gap: 0; margin: 0; }
+@media (min-width: 720px) { .levers { grid-template-columns: 1fr 1fr; column-gap: 48px; } }
+.levers div { padding: 18px 0; border-top: 2px solid var(--ink); }
+.levers dt { font-family: var(--display); font-weight: 800; font-size: 1.7rem; text-transform: uppercase; line-height: 1; margin-bottom: 6px; }
+.levers dd { margin: 0; color: var(--muted); max-width: 32em; }
+
+/* semanas */
+.weeks { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0 28px; }
+.weeks li { border-top: 2px solid var(--ink); padding: 14px 0 20px; }
+.weeks .when { font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+.weeks h3 { font-size: 2rem; margin: 6px 0 8px; }
+.weeks p { color: var(--muted); font-size: .98rem; }
+
+/* planos */
+.plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr)); gap: 28px 20px; }
+.plan { position: relative; display: flex; flex-direction: column; gap: 12px; padding: 22px 20px 20px; background: var(--surface); border: 2px solid var(--line); border-radius: 6px; cursor: pointer; min-width: 0; }
+.plan:has(input:checked) { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.plan:has(input:focus-visible) { outline: 3px solid var(--accent); outline-offset: 3px; }
+.tag { position: absolute; top: -13px; left: 18px; background: var(--accent); color: var(--accent-ink); font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 3px 10px; border-radius: 3px; }
+.plan h3 { font-size: 2rem; }
+.price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.price s { color: var(--muted); }
+.price b { font-family: var(--display); font-weight: 800; font-size: 3.6rem; line-height: 1; }
+.once { font-size: .85rem; color: var(--muted); margin-top: -6px; }
+.plan ul { list-style: none; padding: 0; margin: 4px 0 8px; display: grid; gap: 8px; font-size: .96rem; }
+.plan li { position: relative; padding-left: 22px; }
+.plan li::before { content: ""; position: absolute; left: 0; top: .72em; width: 11px; height: 2px; background: var(--accent); }
+.pick { margin-top: auto; display: flex; align-items: center; justify-content: center; min-height: 46px; border: 2px solid var(--ink); border-radius: 4px; font-weight: 600; font-size: .9rem; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; }
+.pick::after { content: "Escolher"; }
+.plan input:checked ~ .pick { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.plan input:checked ~ .pick::after { content: "Selecionado \2713"; }
+
+.buy { margin-top: 40px; display: grid; gap: 14px; max-width: 560px; }
+.buy label.fl { font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.buy input[type="text"] { width: 100%; min-height: 50px; padding: 0 14px; font: 500 1rem var(--body); color: var(--ink); background: var(--surface); border: 2px solid var(--ink); border-radius: 4px; }
+.out { margin-top: 24px; max-width: 560px; padding: 18px; background: var(--surface); border: 2px solid var(--accent); border-radius: 6px; display: grid; gap: 12px; }
+.out h3 { font-size: 1.8rem; }
+.out textarea { width: 100%; font: 500 .98rem/1.5 var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 10px; resize: vertical; }
+.out .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.out .hint { font-size: .9rem; color: var(--muted); }
+
+/* dúvidas */
+.faq { max-width: 760px; border-bottom: 1px solid var(--line); }
+.faq details { border-top: 1px solid var(--line); }
+.faq summary { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; font-weight: 600; cursor: pointer; list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--display); font-size: 1.6rem; line-height: 1; color: var(--accent); }
+.faq details[open] summary::after { content: "\2212"; }
+.faq details p { padding: 0 0 18px; color: var(--muted); max-width: 40em; }
+
+footer { padding-block: 32px 48px; border-top: 2px solid var(--ink); font-size: .86rem; color: var(--muted); }
+footer .wrap { display: grid; gap: 8px; }
+</style>
+
+<div class="band">
+  <div class="wrap band-in">
+    <p><strong>Black Friday</strong> · até 34% de desconto nos planos</p>
+    <p class="count">Termina em 27/11 · <span id="cd">até 23:59</span></p>
+  </div>
+</div>
+
+<header class="wrap top">
+  <a class="brand" href="#">Corpo Livre</a>
+  <a class="small" href="#planos">Ver planos</a>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div>
+      <p class="eyebrow">Treino em casa, sem equipamento</p>
+      <h1>Seu corpo é a academia.</h1>
+      <p class="lead">Programa de 8 semanas para treinar na sala ou no quarto. Sem halteres, sem elástico, sem aparelho. Você precisa de 2 m² de chão e de 15 a 35 minutos, três vezes por semana.</p>
+      <div class="cta-row">
+        <a class="btn" href="#planos">Quero começar</a>
+        <a class="btn ghost" href="#semanas">Ver as 8 semanas</a>
+      </div>
+      <ul class="facts">
+        <li><b>8 semanas</b>de programa</li>
+        <li><b>3 por semana</b>treinos curtos</li>
+        <li><b>15 a 35 min</b>por sessão</li>
+        <li><b>Zero</b>equipamento</li>
+      </ul>
+    </div>
+
+    <div class="ficha" id="builder">
+      <div class="ficha-head"><h2>Ficha de treino</h2><span>exemplo de sessão</span></div>
+      <div class="controls">
+        <fieldset>
+          <legend>Nível</legend>
+          <div class="seg">
+            <label><input class="sr" type="radio" name="nivel" id="n0" value="0" checked><span>Iniciante</span></label>
+            <label><input class="sr" type="radio" name="nivel" id="n1" value="1"><span>Intermediário</span></label>
+            <label><input class="sr" type="radio" name="nivel" id="n2" value="2"><span>Avançado</span></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Tempo disponível</legend>
+          <div class="seg">
+            <label><input class="sr" type="radio" name="tempo" id="t15" value="15"><span>15 min</span></label>
+            <label><input class="sr" type="radio" name="tempo" id="t25" value="25" checked><span>25 min</span></label>
+            <label><input class="sr" type="radio" name="tempo" id="t35" value="35"><span>35 min</span></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Foco do dia</legend>
+          <div class="seg">
+            <label><input class="sr" type="radio" name="foco" id="f1" value="full" checked><span>Corpo todo</span></label>
+            <label><input class="sr" type="radio" name="foco" id="f2" value="legs"><span>Pernas e glúteos</span></label>
+            <label><input class="sr" type="radio" name="foco" id="f3" value="abs"><span>Abdômen</span></label>
+            <label><input class="sr" type="radio" name="foco" id="f4" value="upper"><span>Parte superior</span></label>
+          </div>
+        </fieldset>
+      </div>
+      <p class="meta" id="meta" aria-live="polite">Corpo todo · Iniciante · cerca de 25 min</p>
+      <div class="row h" aria-hidden="true"><span></span><span>Movimento</span><span style="text-align:right">Séries</span><span style="text-align:right">Desc.</span></div>
+      <ol id="lista"></ol>
+      <p class="ficha-foot">Aquecimento de 3 min e volta à calma de 2 min fazem parte de toda sessão.</p>
+    </div>
+  </div>
+
+  <section class="alt" id="como">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Progressão</p>
+        <h2>Como ficar mais forte sem pesos</h2>
+        <p>Sem carga para adicionar, a dificuldade vem de quatro ajustes simples. O programa usa todos eles ao longo das semanas.</p>
+      </div>
+      <dl class="levers">
+        <div><dt>Tempo</dt><dd>Desça em 4 segundos e suba em 1. O mesmo agachamento fica bem mais difícil só com a mudança de ritmo.</dd></div>
+        <div><dt>Pausa</dt><dd>Fique 2 segundos parado na parte mais difícil, no fundo do agachamento ou com o peito rente ao chão na flexão.</dd></div>
+        <div><dt>Uma perna só</dt><dd>Tirar um apoio coloca o peso do corpo inteiro em um lado. Ponte, agachamento e panturrilha ficam mais fortes assim.</dd></div>
+        <div><dt>Alavanca</dt><dd>Pés no sofá levam mais peso para os ombros na flexão. Mãos no sofá fazem o contrário e ajudam quem está começando.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="semanas">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">O programa</p>
+        <h2>8 semanas, 3 treinos por semana</h2>
+      </div>
+      <ol class="weeks">
+        <li><span class="when">Semanas 1 e 2</span><h3>Base</h3><p>Aprender cada movimento com boa execução. 3 séries e descanso de 45 segundos.</p></li>
+        <li><span class="when">Semanas 3 e 4</span><h3>Volume</h3><p>Entra a quarta série. O descanso cai para 40 segundos.</p></li>
+        <li><span class="when">Semanas 5 e 6</span><h3>Intensidade</h3><p>Descidas lentas, pausas e movimentos com uma perna só.</p></li>
+        <li><span class="when">Semanas 7 e 8</span><h3>Teste</h3><p>Você repete o treino da semana 1 e compara quantas repetições faz agora.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="alt" id="planos">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Planos · preço de Black Friday</p>
+        <h2>Escolha como quer começar</h2>
+        <p>Pagamento único, sem mensalidade. Os preços de Black Friday valem até 27/11.</p>
+      </div>
+
+      <form id="buy" class="buy-form" novalidate>
+        <div class="plans" role="radiogroup" aria-label="Plano">
+          <div class="plan" data-plan="p-essencial">
+            <input class="sr" type="radio" name="plano" id="p-essencial" value="essencial" data-nome="Essencial" data-preco="R$ 47">
+            <h3>Essencial</h3>
+            <div class="price"><s>R$ 67</s><b>R$ 47</b></div>
+            <p class="once">pagamento único</p>
+            <ul>
+              <li>Guia em PDF com as 8 semanas</li>
+              <li>Treinos de 25 minutos, 3 por semana</li>
+              <li>Guia de progressão sem pesos</li>
+            </ul>
+            <label class="pick" for="p-essencial"></label>
+          </div>
+
+          <div class="plan" data-plan="p-completo">
+            <span class="tag">Recomendado</span>
+            <input class="sr" type="radio" name="plano" id="p-completo" value="completo" data-nome="Completo" data-preco="R$ 97" checked>
+            <h3>Completo</h3>
+            <div class="price"><s>R$ 147</s><b>R$ 97</b></div>
+            <p class="once">pagamento único</p>
+            <ul>
+              <li>Tudo do Essencial</li>
+              <li>Versões de 15 e de 35 minutos</li>
+              <li>Vídeo de cada movimento</li>
+              <li>Planilha para anotar suas repetições</li>
+            </ul>
+            <label class="pick" for="p-completo"></label>
+          </div>
+
+          <div class="plan" data-plan="p-acompanhado">
+            <input class="sr" type="radio" name="plano" id="p-acompanhado" value="acompanhado" data-nome="Acompanhado" data-preco="R$ 197">
+            <h3>Acompanhado</h3>
+            <div class="price"><s>R$ 297</s><b>R$ 197</b></div>
+            <p class="once">pagamento único</p>
+            <ul>
+              <li>Tudo do Completo</li>
+              <li>Correção de execução por vídeo</li>
+              <li>Grupo de alunos no WhatsApp</li>
+            </ul>
+            <label class="pick" for="p-acompanhado"></label>
+          </div>
+        </div>
+
+        <div class="buy">
+          <label class="fl" for="nome">Seu nome</label>
+          <input type="text" id="nome" name="nome" autocomplete="given-name" placeholder="Como devemos te chamar?">
+          <button class="btn" type="submit" id="go">Quero o plano Completo</button>
+        </div>
+      </form>
+
+      <div class="out" id="out" hidden>
+        <h3>Sua mensagem está pronta</h3>
+        <textarea id="msg" rows="3" readonly aria-label="Mensagem do pedido"></textarea>
+        <div class="actions">
+          <button class="btn ghost" type="button" id="copy">Copiar mensagem</button>
+          <a class="btn" id="wa" href="#" target="_blank" rel="noopener" hidden>Abrir WhatsApp</a>
+        </div>
+        <p class="hint" id="hint">Copie a mensagem e envie no WhatsApp para finalizar a compra.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="duvidas">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Dúvidas</p>
+        <h2>Antes de comprar</h2>
+      </div>
+      <div class="faq">
+        <details><summary>Preciso de algum equipamento?</summary><p>Nenhum. Um tapete ou toalha ajuda no chão, e um sofá ou cadeira firme serve para algumas variações, como o tríceps e o afundo búlgaro.</p></details>
+        <details><summary>Moro em apartamento. Faz barulho?</summary><p>Os movimentos com salto aparecem só nos níveis mais altos e cada um tem uma variação sem impacto.</p></details>
+        <details><summary>Nunca treinei. Consigo acompanhar?</summary><p>Sim. O nível iniciante começa com flexão apoiada nos joelhos, agachamento livre e prancha curta. Se você tem dor, lesão ou alguma condição de saúde, converse com um médico antes de começar.</p></details>
+        <details><summary>Quanto tempo por dia?</summary><p>As sessões têm 15, 25 ou 35 minutos, três vezes por semana. Você escolhe a duração de acordo com o seu dia.</p></details>
+        <details><summary>Como recebo o programa?</summary><p>Depois da confirmação do pagamento você recebe o acesso pelo WhatsApp e pelo e-mail informados na compra.</p></details>
+        <details><summary>E se eu desistir?</summary><p>Compras feitas pela internet têm 7 dias para desistência, conforme o Código de Defesa do Consumidor.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Corpo Livre</strong> · treino em casa sem pesos</p>
+    <p>Os resultados variam de pessoa para pessoa. Se você tem dor, lesão ou alguma condição de saúde, consulte um médico antes de começar.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  /* Número do WhatsApp de vendas no formato 5511999999999. Vazio mostra só o botão de copiar. */
+  var WHATS = '';
+
+  var LV = ['Iniciante', 'Intermediário', 'Avançado'];
+  var SETS = [3, 4, 4], REPS = [10, 12, 15], SECS = [20, 35, 50], REST = [45, 40, 30];
+  var COUNT = { 15: 3, 25: 5, 35: 6 };
+  function M(n, o) { var m = { n: n, t: 'r', r: null, side: '' }; for (var k in o) m[k] = o[k]; return m; }
+
+  var AGACH = M(['Agachamento livre', 'Agachamento com pausa de 2s', 'Agachamento com salto']);
+  var FLEXAO = M(['Flexão com joelhos no chão', 'Flexão', 'Flexão com pés no sofá'], { r: [8, 10, 12] });
+  var AFUNDO = M(['Afundo alternado', 'Afundo caminhando', 'Afundo búlgaro (pé no sofá)'], { r: [8, 10, 12], side: 'por perna' });
+  var PONTE = M(['Ponte de glúteo', 'Ponte com pausa de 2s', 'Ponte com uma perna']);
+  var PRANCHA = M(['Prancha nos joelhos', 'Prancha', 'Prancha com toque no ombro'], { t: 's' });
+
+  var FOCUS = {
+    full: { label: 'Corpo todo', moves: [AGACH, FLEXAO, AFUNDO, PONTE, PRANCHA,
+      M(['Burpee sem salto', 'Burpee', 'Burpee com flexão'], { r: [6, 8, 10] })] },
+    legs: { label: 'Pernas e glúteos', moves: [AGACH, AFUNDO, PONTE,
+      M(['Agachamento sumô', 'Sumô com pausa de 2s', 'Sumô com salto']),
+      M(['Panturrilha em pé', 'Panturrilha com pausa de 2s', 'Panturrilha numa perna só'], { r: [15, 20, 25] }),
+      M(['Cadeira na parede', 'Cadeira na parede', 'Cadeira na parede com pulsos'], { t: 's' })] },
+    abs: { label: 'Abdômen', moves: [PRANCHA,
+      M(['Abdominal curto', 'Abdominal bicicleta', 'Abdominal em V']),
+      M(['Escalador lento', 'Mountain climber', 'Mountain climber rápido'], { t: 's' }),
+      M(['Elevação de joelhos deitado', 'Elevação de pernas', 'Elevação de pernas com pausa'], { r: [8, 10, 12] }),
+      M(['Prancha lateral nos joelhos', 'Prancha lateral', 'Prancha lateral com elevação do quadril'], { t: 's', side: 'por lado' }),
+      M(['Dead bug', 'Dead bug lento', 'Dead bug com pausa de 3s'], { r: [8, 10, 12], side: 'por lado' })] },
+    upper: { label: 'Parte superior', moves: [FLEXAO,
+      M(['Flexão com mãos no sofá', 'Flexão diamante', 'Flexão com pausa de 3s'], { r: [8, 10, 12] }),
+      M(['Tríceps na cadeira (joelhos dobrados)', 'Tríceps na cadeira', 'Tríceps na cadeira com uma perna elevada'], { r: [8, 10, 12] }),
+      M(['Toque no ombro nos joelhos', 'Prancha com toque no ombro', 'Prancha com toque e flexão'], { r: [10, 12, 14] }),
+      M(['Superman', 'Superman com pausa de 2s', 'Superman com remada no ar']),
+      M(['Prancha nos joelhos', 'Prancha', 'Prancha longa'], { t: 's' })] }
+  };
+
+  function val(name) { return document.querySelector('input[name="' + name + '"]:checked').value; }
+  var list = document.getElementById('lista'), meta = document.getElementById('meta');
+
+  function render() {
+    var f = FOCUS[val('foco')], lv = +val('nivel'), min = +val('tempo');
+    meta.textContent = f.label + ' · ' + LV[lv] + ' · cerca de ' + min + ' min';
+    list.innerHTML = f.moves.slice(0, COUNT[min]).map(function (m, i) {
+      var vol = m.t === 's' ? SETS[lv] + '×' + SECS[lv] + 's' : SETS[lv] + '×' + (m.r ? m.r[lv] : REPS[lv]);
+      return '<li class="row"><span class="idx">' + (i + 1) + '</span><span class="mv">' + m.n[lv] +
+        (m.side ? '<small>' + m.side + '</small>' : '') + '</span><span class="vol">' + vol +
+        '</span><span class="rest">' + REST[lv] + 's</span></li>';
+    }).join('');
+  }
+  document.getElementById('builder').addEventListener('change', render);
+  render();
+
+  /* contagem regressiva até 27/11/2026 23:59 (Brasília) */
+  var end = new Date('2026-11-27T23:59:59-03:00').getTime();
+  var cd = document.getElementById('cd');
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function tick() {
+    var left = Math.floor((end - Date.now()) / 1000);
+    if (left <= 0) { cd.textContent = 'oferta encerrada'; return false; }
+    var d = Math.floor(left / 86400), h = Math.floor(left % 86400 / 3600), m = Math.floor(left % 3600 / 60), s = left % 60;
+    cd.textContent = d + 'd ' + pad(h) + 'h ' + pad(m) + 'min ' + pad(s) + 's';
+    return true;
+  }
+  if (tick()) { var timer = setInterval(function () { if (!tick()) clearInterval(timer); }, 1000); }
+
+  /* planos e mensagem do pedido */
+  var go = document.getElementById('go');
+  function chosen() { return document.querySelector('input[name="plano"]:checked'); }
+  function syncBtn() { go.textContent = 'Quero o plano ' + chosen().dataset.nome; }
+  document.querySelectorAll('.plan').forEach(function (card) {
+    card.addEventListener('click', function (e) {
+      var input = document.getElementById(card.dataset.plan);
+      if (e.target !== input && !e.target.closest('label')) { input.checked = true; }
+      syncBtn();
+    });
+  });
+  document.querySelectorAll('input[name="plano"]').forEach(function (i) { i.addEventListener('change', syncBtn); });
+  syncBtn();
+
+  var out = document.getElementById('out'), msg = document.getElementById('msg'), wa = document.getElementById('wa'), hint = document.getElementById('hint');
+  document.getElementById('buy').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var p = chosen(), nome = document.getElementById('nome').value.trim();
+    var text = 'Olá! ' + (nome ? 'Meu nome é ' + nome + ' e quero' : 'Quero') + ' o plano ' + p.dataset.nome + ' (' + p.dataset.preco + ') do Corpo Livre.';
+    msg.value = text;
+    out.hidden = false;
+    if (WHATS) {
+      wa.href = 'https://wa.me/' + WHATS + '?text=' + encodeURIComponent(text);
+      wa.hidden = false;
+      hint.textContent = 'Abra o WhatsApp para finalizar a compra.';
+    }
+    out.scrollIntoView({ block: 'nearest' });
+  });
+  document.getElementById('copy').addEventListener('click', function () {
+    var btn = this;
+    function done() { btn.textContent = 'Copiado'; setTimeout(function () { btn.textContent = 'Copiar mensagem'; }, 2000); }
+    function fallback() { msg.focus(); msg.select(); btn.textContent = 'Selecionado, use copiar'; }
+    try {
+      navigator.clipboard.writeText(msg.value).then(done, fallback);
+    } catch (err) { fallback(); }
+  });
+})();
+</script>
+
+</body></html>
